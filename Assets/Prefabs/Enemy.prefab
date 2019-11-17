@@ -112,6 +112,8 @@ GameObject:
   - component: {fileID: 6850426351204583331}
   - component: {fileID: 107028927}
   - component: {fileID: 6612985891784063883}
+  - component: {fileID: 1376600237}
+  - component: {fileID: 7290712847874210240}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -159,7 +161,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.17000002, y: -0.62416196}
+  m_Offset: {x: -0.17000002, y: -0.35}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -170,7 +172,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.03, y: 0.6016761}
+  m_Size: {x: 0.51, y: 0.75}
   m_EdgeRadius: 0
 --- !u!50 &6612985891784063883
 Rigidbody2D:
@@ -193,3 +195,47 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!58 &1376600237
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4597429715859650944}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.26, y: 0.4}
+  serializedVersion: 2
+  m_Radius: 0.36
+--- !u!114 &7290712847874210240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4597429715859650944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92c021df3b10c4d4d97b450c9eb3d426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 60
+  isAlive: 0
+  deathClip:
+  - {fileID: 8300000, guid: 9e195a2e59a8c1a409041f86bef77053, type: 3}
+  - {fileID: 8300000, guid: be1b7ac10cc99d043a67ca8a99a3e7b8, type: 3}
+  - {fileID: 8300000, guid: 8bdaca90403c9474bbec4b646a29dabd, type: 3}
+  - {fileID: 8300000, guid: 5b9cd5017bc8f62469d69751debf848a, type: 3}
+  - {fileID: 8300000, guid: 83b24878b1395db47abf3428205d7b15, type: 3}
+  - {fileID: 8300000, guid: 40a43687aeb9c9249951d2aeb7d79132, type: 3}
+  injuredClips:
+  - {fileID: 8300000, guid: 3420354e2e71a014ebab0bf0a6334f78, type: 3}
+  - {fileID: 8300000, guid: 3dda686da59bb65459bae4e745374912, type: 3}
+  - {fileID: 8300000, guid: 3b0569da5a4aa4940a453443346a4ab7, type: 3}
+  - {fileID: 8300000, guid: 5583160e24b60754b9c31437e0d1475e, type: 3}
+  - {fileID: 8300000, guid: 51853eab7c9f3de43bddf9928a19e91a, type: 3}
+  - {fileID: 8300000, guid: 8fbceedadde7a244f97d52710f489fee, type: 3}
