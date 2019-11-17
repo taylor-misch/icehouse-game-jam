@@ -77,20 +77,19 @@ public class PlayerController : MonoBehaviour {
         transform1.localScale = theScale;
     }
 
+    // TODO this same method should be usable against us. Thus the separation of attack logic! @Taylor
     private void Attack() {
         animator.SetTrigger(IS_ATTACKING_TRIGGER);
         
-        Debug.DrawLine(transform.position, new Vector2(transform.position.x +2, transform.position.y), Color.green);
+        Debug.DrawLine(transform.position, new Vector2(transform.position.x +1.5f, transform.position.y), Color.green);
 
-        var hits = Physics2D.RaycastAll(transform.position, transform.right, 10f);
+        var hits = Physics2D.RaycastAll(transform.position, transform.right, 1.5f);
         foreach (var v in hits) {
-            Debug.Log($"Hit something {v.transform.name}");
-        }
-        
-        var hit = Physics2D.Raycast(transform.position, transform.right, 10f);
-        if (hit.transform != null) Debug.Log($"Hit one thing {hit.transform.name}");
+            if (v.transform.CompareTag(Tags.PLAYER)) continue;
+            Debug.Log($"Raycast all Hit enemy named: {v.transform.name}");
 
-        var asdf = Physics2D.Linecast(transform.position, new Vector2(transform.position.x + 2, transform.position.y));
-        if(asdf.transform != null) Debug.Log($"Line Cast hit {asdf.collider.gameObject.name}");
+            var enemyHealth = v.transform.GetComponent<HasHealth>();
+            
+        }
     }
 }
