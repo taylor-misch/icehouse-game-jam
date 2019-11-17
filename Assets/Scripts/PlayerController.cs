@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float speed = 4f;
@@ -80,16 +77,18 @@ public class PlayerController : MonoBehaviour {
     // TODO this same method should be usable against us. Thus the separation of attack logic! @Taylor
     private void Attack() {
         animator.SetTrigger(IS_ATTACKING_TRIGGER);
+
         
-        Debug.DrawLine(transform.position, new Vector2(transform.position.x +1.5f, transform.position.y), Color.green);
-
-        var hits = Physics2D.RaycastAll(transform.position, transform.right, 1.5f);
+        Debug.DrawLine(transform.position, Vector2.left, Color.green); 
+            //new Vector2(transform.position.x +1.5f, transform.position.y), Color.green);
+        #warning TODO Need to attack to the left as well.
+        var hits = Physics2D.RaycastAll(transform.position, _facingRight ? Vector2.right: Vector2.left, 1.5f);
         foreach (var v in hits) {
+            //TODO use layer mask instead
             if (v.transform.CompareTag(Tags.PLAYER)) continue;
-            Debug.Log($"Raycast all Hit enemy named: {v.transform.name}");
-
-            var enemyHealth = v.transform.GetComponent<HasHealth>();
             
+            var enemyHealth = v.transform.GetComponent<HasHealth>();
+            enemyHealth.ChangeHealth(-20);
         }
     }
 }

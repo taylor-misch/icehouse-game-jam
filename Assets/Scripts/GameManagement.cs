@@ -1,62 +1,51 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using System;
 
 public class GameManagement : MonoBehaviour {
-    public static GameManagement manage;
+    public static GameManagement Instance;
     private string SAVE_FILE_NAME;
-    public int CurrentLevel { get;set;}
+    public int CurrentLevel { get; set;}
     private float score = 0f;
     private float totalScore = 0f;
     private int kills = 0;
     public string playerName = "";
 
-    void Awake() {
-        if (manage == null) {
+    private void Awake() {
+        if (Instance == null) {
             DontDestroyOnLoad(gameObject);
-            SAVE_FILE_NAME = Application.persistentDataPath + "/vagSaveData.dat";
-            manage = this;
-        }else if(manage != this){
+            Instance = this;
+        }else if(Instance != this){
             Destroy(gameObject);
         }
     }
 
     // Get and increase game Score
-    public float getScore(){
+    public float GetScore(){
         return score;
     }
 
-    public float getTotalScore() {
+    public float GetTotalScore() {
         return totalScore;
     }
 
-    public int getKills() {
+    public int GetKills() {
         return kills;
     }
 
-    public void increaseKills() {
+    public void IncreaseKills() {
         kills++;
     }
 
-    public void increaseLevel() {
-        CurrentLevel++;
-    }
-
-    public void increaseScore(float pScore){
+    public void IncreaseScore(float pScore){
         score += pScore;
     }
 
-    public void decreaseScore(float pScore) {
+    public void DecreaseScore(float pScore) {
         score -= pScore;
     }
-
-    internal void initializeStealthScore() {
-        score = 8000;
-    }
-
-#region IO Methods
+    #region IO Methods
     // Could call these methods on enable and disable to have a constant autosave    
     public void Save() {
         Debug.Log("Saving game data to: " + SAVE_FILE_NAME);
@@ -85,11 +74,7 @@ public class GameManagement : MonoBehaviour {
     public bool HasSaveFile() {
         return File.Exists(SAVE_FILE_NAME);
     }
-
-    public void CommitScoreToTotal() {
-        totalScore += score;
-    }
-#endregion
+    #endregion
 }
 
 // Class with data to save and load to/from file

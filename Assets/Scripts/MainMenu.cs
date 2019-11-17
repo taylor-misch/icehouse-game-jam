@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour{
     InputField nameInput;
 
     void Awake() {
-        Screen.lockCursor = false;
+        Cursor.visible = false;
         //GameObject canvas = ;
         //canvas.SetActive(false);
         nameCanvas = GameObject.Find("NameCanvas").GetComponent<Canvas>();
@@ -44,7 +44,7 @@ public class MainMenu : MonoBehaviour{
             //UnityEditor.EditorUtility.DisplayDialog("No Name Entered", "Please enter your name in the box so you can begin.", "OK");
         }
         else {
-            GameManagement.manage.playerName = playersName;
+            GameManagement.Instance.playerName = playersName;
             Application.LoadLevel(0);
         }
     }
@@ -54,15 +54,15 @@ public class MainMenu : MonoBehaviour{
     }
 
     public void LoadGame() {
-    Debug.Log(GameManagement.manage.HasSaveFile());
-        if (!GameManagement.manage.HasSaveFile()) {
+    Debug.Log(GameManagement.Instance.HasSaveFile());
+        if (!GameManagement.Instance.HasSaveFile()) {
             //Window.alert("no saved games, please start a new one");
             NoSaveGameCanvas.enabled = true;
             //UnityEditor.EditorUtility.DisplayDialog("No Saved Game","This computer does not have a saved game. Please click 'New Game' and enjoy! =D","OK", "Cancel");
         }
         else { 
-            GameManagement.manage.Load();
-            Application.LoadLevel(GameManagement.manage.CurrentLevel);
+            GameManagement.Instance.Load();
+            Application.LoadLevel(GameManagement.Instance.CurrentLevel);
         }
     }
 
