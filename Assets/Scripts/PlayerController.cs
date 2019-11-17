@@ -78,15 +78,19 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Attack() {
-        //animator.SetBool(IS_ATTACKING, true);
         animator.SetTrigger(IS_ATTACKING_TRIGGER);
         
-        RaycastHit[] hits;
-        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, 0), transform.forward);
-        hits = Physics.RaycastAll(transform.position, transform.forward, 1.0F);
+        Debug.DrawLine(transform.position, new Vector2(transform.position.x +2, transform.position.y), Color.green);
 
+        var hits = Physics2D.RaycastAll(transform.position, transform.right, 10f);
         foreach (var v in hits) {
             Debug.Log($"Hit something {v.transform.name}");
         }
+        
+        var hit = Physics2D.Raycast(transform.position, transform.right, 10f);
+        if (hit.transform != null) Debug.Log($"Hit one thing {hit.transform.name}");
+
+        var asdf = Physics2D.Linecast(transform.position, new Vector2(transform.position.x + 2, transform.position.y));
+        if(asdf.transform != null) Debug.Log($"Line Cast hit {asdf.collider.gameObject.name}");
     }
 }
