@@ -8,7 +8,8 @@ public class HasHealth : MonoBehaviour {
     [SerializeField] private AudioClip[] injuredClips;
     Animator _anim;
     private float timeToDie = 7f;
-    private static readonly int IS_DEAD = Animator.StringToHash("IsDead");
+    private static readonly int IS_DEAD_FRONT = Animator.StringToHash("IsDeadFront");
+    private static readonly int IS_DEAD_BACK = Animator.StringToHash("IsDeadBack");
 
     void Awake() {
         _anim = GetComponentInChildren<Animator>();
@@ -28,8 +29,8 @@ public class HasHealth : MonoBehaviour {
     }
 
     void Die() {
-        // TODO Make a dead trigger
-        _anim.SetTrigger(IS_DEAD);
+        // TODO Make a dead trigger for front and back separate
+        _anim.SetTrigger(IS_DEAD_BACK);
         AudioSource.PlayClipAtPoint(deathClip[Random.Range(0, deathClip.Length)], gameObject.transform.position, .8f);
         Destroy(gameObject, timeToDie);
 
