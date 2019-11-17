@@ -6,6 +6,8 @@
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
+[Ll]ogs/
+[Pp]ackages/
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
@@ -27,6 +29,7 @@ ExportedObj/
 *.pdb
 *.opendb
 *.VC.db
+*.idea
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -66,4 +69,3 @@ ExportedObj/
 Icon? 
 ehthumbs.db 
 Thumbs.db
-
