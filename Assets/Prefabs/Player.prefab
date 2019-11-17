@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 4
-  run_speed: 6
+  run_speed: 7
   animator: {fileID: 796276464}
 --- !u!61 &801222683977361156
 BoxCollider2D:

@@ -10,13 +10,13 @@ public class PlayerController : MonoBehaviour {
     
     private new Rigidbody2D _rigidBody;
     private bool _facingRight = true;  // For determining which way the player is currently facing.
+    private bool _isRunning;
     
     private static readonly int SPEED = Animator.StringToHash("Speed");
     private static readonly int IS_ATTACKING = Animator.StringToHash("IsAttacking");
     private static readonly int IS_RUNNING = Animator.StringToHash("IsRunning");
     private static readonly int IS_WALKING = Animator.StringToHash("IsWalking");
-
-    private bool _isRunning;
+    private static readonly int IS_ATTACKING_TRIGGER = Animator.StringToHash("IsAttackingTrigger");
 
     private void Start() {
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -46,7 +46,6 @@ public class PlayerController : MonoBehaviour {
         }
 
         var movingSpeed = Mathf.Abs(horizontalChange + verticalChange);
-        Debug.LogError(movingSpeed);
         animator.SetFloat(SPEED, movingSpeed);
 
         if (_isRunning && movingSpeed > 0) {
@@ -61,15 +60,7 @@ public class PlayerController : MonoBehaviour {
 
         #region Attacks
         if (Input.GetMouseButtonDown(0)) {
-            Debug.Log("Fire all the attacks");
-            //animator.SetBool(IS_ATTACKING, true);
-        }
-        if (Input.GetMouseButtonDown(1)) {
-            Debug.Log("Shield all the attacks");
-        }
-
-        if (Input.GetMouseButtonDown(2)) {
-            Debug.Log("Cry all the attacks");
+            Attack();
         }
         #endregion
         
@@ -84,5 +75,18 @@ public class PlayerController : MonoBehaviour {
         Vector3 theScale = transform1.localScale;
         theScale.x *= -1;
         transform1.localScale = theScale;
+    }
+
+    private void Attack() {
+        //animator.SetBool(IS_ATTACKING, true);
+        animator.SetTrigger(IS_ATTACKING_TRIGGER);
+        
+        RaycastHit[] hits;
+        Debug.DrawRay(new Vector3(transform.position.x, transform.position.y, 0), transform.forward);
+        hits = Physics.RaycastAll(transform.position, transform.forward, 1.0F);
+
+        foreach (var v in hits) {
+            Debug.Log($"Hit something {v.transform.name}");
+        }
     }
 }
