@@ -91,7 +91,7 @@ Animator:
   m_GameObject: {fileID: 2049985902}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 03d3a6643c8a2ca4b9b2a2cfc004dc9a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5767f7f61425ed649a441ad98fc8a179, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -224,7 +224,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 60
-  isAlive: 0
   deathClip:
   - {fileID: 8300000, guid: 9e195a2e59a8c1a409041f86bef77053, type: 3}
   - {fileID: 8300000, guid: be1b7ac10cc99d043a67ca8a99a3e7b8, type: 3}

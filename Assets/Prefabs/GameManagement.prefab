@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 739157367092597261}
   - component: {fileID: 739157367092597260}
+  - component: {fileID: 117692991}
   m_Layer: 0
   m_Name: GameManagement
   m_TagString: Untagged
@@ -44,3 +45,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
+--- !u!114 &117692991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 739157367092597259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b50b615cd41438849aa089c6b09a0ad6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  displayText: {fileID: 0}
+  enemiesParent: {fileID: 0}
+  enemyPrefabs:
+  - {fileID: 4597429715859650944, guid: 4562c787704775f43a578abb6dfc8197, type: 3}
+  spawnPoints:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

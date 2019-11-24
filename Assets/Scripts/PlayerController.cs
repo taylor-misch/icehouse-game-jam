@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using DefaultNamespace;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float speed = 4f;
@@ -8,12 +9,6 @@ public class PlayerController : MonoBehaviour {
     private new Rigidbody2D _rigidBody;
     private bool _facingRight = true;  // For determining which way the player is currently facing.
     private bool _isRunning;
-    
-    private static readonly int SPEED = Animator.StringToHash("Speed");
-    private static readonly int IS_ATTACKING = Animator.StringToHash("IsAttacking");
-    private static readonly int IS_RUNNING = Animator.StringToHash("IsRunning");
-    private static readonly int IS_WALKING = Animator.StringToHash("IsWalking");
-    private static readonly int IS_ATTACKING_TRIGGER = Animator.StringToHash("IsAttackingTrigger");
 
     private void Start() {
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -43,13 +38,13 @@ public class PlayerController : MonoBehaviour {
         }
 
         var movingSpeed = Mathf.Abs(horizontalChange + verticalChange);
-        animator.SetFloat(SPEED, movingSpeed);
+        animator.SetFloat(Constants.SPEED, movingSpeed);
 
         if (_isRunning && movingSpeed > 0) {
-            animator.SetBool(IS_RUNNING, true);
+            animator.SetBool(Constants.IS_RUNNING, true);
         }
         else {
-            animator.SetBool(IS_RUNNING, false);
+            animator.SetBool(Constants.IS_RUNNING, false);
         }
 
         _rigidBody.MovePosition(position);
@@ -76,8 +71,7 @@ public class PlayerController : MonoBehaviour {
 
     // TODO this same method should be usable against us. Thus the separation of attack logic! @Taylor
     private void Attack() {
-        animator.SetTrigger(IS_ATTACKING_TRIGGER);
-
+        animator.SetTrigger(Constants.IS_ATTACKING_TRIGGER);
         
         Debug.DrawLine(transform.position, Vector2.left, Color.green); 
             //new Vector2(transform.position.x +1.5f, transform.position.y), Color.green);
