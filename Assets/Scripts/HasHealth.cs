@@ -1,6 +1,9 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using DefaultNamespace;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class HasHealth : MonoBehaviour {
     [SerializeField] private float maxHealth = 60f;
@@ -10,16 +13,16 @@ public class HasHealth : MonoBehaviour {
     [SerializeField] private AudioClip[] injuredClips;
     Animator _anim;
     private float timeToDie = 7f;
-    private static readonly int IS_DEAD_FRONT = Animator.StringToHash("IsDeadFront");
-    private static readonly int IS_DEAD_BACK = Animator.StringToHash("IsDeadBack");
 
-    void Awake() {
+    private void OnEnable() {
         _anim = GetComponentInChildren<Animator>();
         isAlive = true;
         currentHealth = maxHealth;
     }
 
     public void ChangeHealth(float amount) {
+        if (!isAlive) return;
+        
         currentHealth = Mathf.Clamp(currentHealth + amount, 0f, maxHealth);
         
         //Debug.Log($"{currentHealth}/{maxHealth}");
@@ -32,9 +35,8 @@ public class HasHealth : MonoBehaviour {
 
     private void Die() {
         // TODO Make a dead trigger for front and back separate
-        Debug.Log("Enemy has died. Play dead animation");
         isAlive = false;
-        _anim.SetTrigger(IS_DEAD_BACK);
+        _anim.SetTrigger(Constants.IS_DEAD_BACK);
         AudioSource.PlayClipAtPoint(deathClip[Random.Range(0, deathClip.Length)], gameObject.transform.position, .8f);
         
         //Destroy(gameObject, timeToDie);

@@ -6,16 +6,17 @@ public class GameObjective : MonoBehaviour {
     public static GameObjective Instance;
 
     private bool _isGameOver = false;
+    private bool _isGameEnding = false;
     // Count how long the player has survived.
     private float _stopwatch = 0f;
 
-    private float _spawnTimer = 7;
-    private float _timeTillNextSpawn = 8;
+    private float _spawnTimer = 6;
+    private const float TIME_TILL_NEXT_SPAWN = 7;
 
     public UnityEngine.UI.Text displayText;
 
     // Enemies Pooling
-    private List<GameObject> enemies;
+    private List<GameObject> _enemies;
     [SerializeField] private GameObject enemiesParent;
 
     public GameObject[] enemyPrefabs;
@@ -24,16 +25,16 @@ public class GameObjective : MonoBehaviour {
     
     void Awake() {
         Instance = this;
-        enemies = new List<GameObject>();
+        _enemies = new List<GameObject>();
         InitialLoadOfEnemies();
     }
     
     void InitialLoadOfEnemies() {
-        for (int i = 0; i < enemyPrefabs.Length; i++) {
+        /*for (int i = 0; i < enemyPrefabs.Length; i++) {
             GameObject obj = (GameObject)Instantiate(enemyPrefabs[i]);
             obj.SetActive(false);
-            enemies.Add(obj);
-        }
+            _enemies.Add(obj);
+        }*/
     }
     
    /* void Start(){
@@ -53,50 +54,54 @@ public class GameObjective : MonoBehaviour {
         en2.SetActive(true);
     }*/
     
-    private void Update(){
+    private void Update() {
+        if (_isGameOver) return;
+        
         // Increment/decrement the timers
         _stopwatch += Time.deltaTime;
-        _spawnTimer += Time.deltaTime;
-        _isGameOver = _stopwatch > 60;
-
-        if (_isGameOver){
+        _isGameEnding = _stopwatch > 60;
+        
+        if (_isGameEnding) {
+            _isGameOver = true;
             Debug.Log("You have Completed the Game!");
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0;
+            return;
         }
-
+        
+        _spawnTimer += Time.deltaTime;
         // Show the timer on screen somehow Canvas item or OnGui?
         UpdateTimerOnScreen();
         
-        if(_spawnTimer >= _timeTillNextSpawn) {
+        if(_spawnTimer >= TIME_TILL_NEXT_SPAWN) {
             _spawnTimer = 0;
-            _timeTillNextSpawn--;
             SpawnNewEnemy();
-            Debug.Log("Spawned enemy! Time till next spawn is: " + _timeTillNextSpawn);
+            Debug.Log("Spawned enemy! Time till next spawn is: " + TIME_TILL_NEXT_SPAWN);
         }
     }
     
     private void SpawnNewEnemy() {
         GameObject enemy = GetEnemy();
-        Transform transPosition = spawnPoints[Random.Range(0, spawnPoints.Length)];
+        Transform spawnPosition = spawnPoints[Random.Range(0, spawnPoints.Length)];
         
-        Debug.Log("Spawning Enemy: " + enemy.name + " at " + transPosition);
-        enemy.transform.position = transPosition.position;//+ new Vector3(-16.7f, 0f, 7.66f);
+//        Debug.Log("Spawning Enemy: " + enemy.name + " at " + spawnPosition);
+        enemy.transform.position = spawnPosition.position;
         enemy.SetActive(true);
     }
     
     private GameObject GetEnemy(){
         // Grab the first enemy in array that is not currently active
-        foreach (var enemy in enemies) {
+        foreach (var enemy in _enemies) {
             if (!enemy.activeInHierarchy) {
                 return enemy;
             }
         }
+        
         // Otherwise create a new enemy.
-        var obj = (GameObject)Instantiate(GetEnemyPrefab(), enemiesParent.transform);
+        var obj = (GameObject)Instantiate(GetEnemyPrefab(), enemiesParent.transform, transform);
         obj.SetActive(false);
-        enemies.Add(obj);
+        _enemies.Add(obj);
         return obj;
     }
     
@@ -148,8 +153,7 @@ public class GameObjective : MonoBehaviour {
             GUILayout.Label("Total Score: " + potentialTotalScore);
 
             if (GUILayout.Button("Next Level")) {
-                //Cursor.lockState = CursorLockMode.Locked;
-                Screen.lockCursor = true;
+                Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 /*GameManagement.manage.increaseLevel();
                 GameManagement.manage.CommitScoreToTotal();
@@ -157,25 +161,22 @@ public class GameObjective : MonoBehaviour {
             }
 
             if (GUILayout.Button("Restart")) {
-                //Cursor.lockState = CursorLockMode.None;
-                Screen.lockCursor = false;
+                Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = false;
                 Application.LoadLevel(Application.loadedLevel);
             }
 
             if (GUILayout.Button("Save and Continue")) {
-                //Cursor.lockState = CursorLockMode.None;
+                Cursor.lockState = CursorLockMode.None;
                 /*GameManagement.manage.increaseLevel();
                 GameManagement.manage.CommitScoreToTotal();
                 GameManagement.manage.Save();
                 Application.LoadLevel(Constants.RPG_LEVEL);*/
-                Screen.lockCursor = true;
                 Cursor.visible = false;
             }
 
             if (GUILayout.Button("Quit to Main Menu")) {
-                //Cursor.lockState = CursorLockMode.None;
-                Screen.lockCursor = false;
+                Cursor.lockState = CursorLockMode.None;
                 Cursor.visible = true;
                 //Application.LoadLevel(Constants.MAIN_MENU);
             }
