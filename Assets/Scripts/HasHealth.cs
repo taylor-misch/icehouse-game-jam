@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using DefaultNamespace;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,6 +11,7 @@ public class HasHealth : MonoBehaviour {
     [SerializeField] private AudioClip[] injuredClips;
     Animator _anim;
     private float timeToDie = 7f;
+    [SerializeField] private bool isPlayer = false;
 
     private void OnEnable() {
         _anim = GetComponentInChildren<Animator>();
@@ -22,10 +21,9 @@ public class HasHealth : MonoBehaviour {
 
     public void ChangeHealth(float amount) {
         if (!isAlive) return;
-        
         currentHealth = Mathf.Clamp(currentHealth + amount, 0f, maxHealth);
         
-        //Debug.Log($"{currentHealth}/{maxHealth}");
+        // Debug.Log($"{currentHealth}/{maxHealth}");
         if (currentHealth <= 0 && isAlive) {
             Die();
         } else {
@@ -34,22 +32,26 @@ public class HasHealth : MonoBehaviour {
     }
 
     private void Die() {
-        // TODO Make a dead trigger for front and back separate
         isAlive = false;
-        _anim.SetTrigger(Constants.IS_DEAD_BACK);
         AudioSource.PlayClipAtPoint(deathClip[Random.Range(0, deathClip.Length)], gameObject.transform.position, .8f);
-        
-        //Destroy(gameObject, timeToDie);
-        IEnumerator coroutine = KillEnemy();
-        StartCoroutine(coroutine);
-        
-        GameManagement.Instance.IncreaseKills();
+
+        if (isPlayer) {
+            _anim.SetBool(Constants.IS_DEAD, true);
+            GameObjective.Instance.GameOver();
+        }
+        else {
+            // TODO Make a dead trigger for front and back separate
+            _anim.SetTrigger(Constants.IS_DEAD_BACK);
+            
+            IEnumerator coroutine = KillEnemy();
+            StartCoroutine(coroutine);
+
+            GameManagement.Instance.IncreaseKills();
+        }
     }
     
-    public IEnumerator KillEnemy() {
-        while (true){
-            yield return new WaitForSeconds(timeToDie);
-            gameObject.SetActive(false);
-        }
+    private IEnumerator KillEnemy() {
+        yield return new WaitForSeconds(timeToDie);
+        gameObject.SetActive(false);
     }
 }

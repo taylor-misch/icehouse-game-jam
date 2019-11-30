@@ -77,7 +77,6 @@ public class GameObjective : MonoBehaviour {
         if(_spawnTimer >= TIME_TILL_NEXT_SPAWN) {
             _spawnTimer = 0;
             SpawnNewEnemy();
-            Debug.Log("Spawned enemy! Time till next spawn is: " + TIME_TILL_NEXT_SPAWN);
         }
     }
     
@@ -107,7 +106,7 @@ public class GameObjective : MonoBehaviour {
     
     private GameObject GetEnemyPrefab() {
         int i = Random.Range(1, 101);
-        Debug.Log($"I is: {i} Returning prefab to create from based on this number");
+        //Debug.Log($"I is: {i} Returning prefab to create from based on this number");
         //return i > 85 ? enemyPrefabs[2] : i > 42 ? enemyPrefabs[1] : enemyPrefabs[0];
         return enemyPrefabs[0];
     }
@@ -126,62 +125,52 @@ public class GameObjective : MonoBehaviour {
     }
     
     void OnGUI() {
-        if (_isGameOver) {
-            GUI.color = Color.white;
+        if (!_isGameOver) return;
+        GUI.color = Color.white;
 
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
-            GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
+        GUI.Box(new Rect(0, 0, Screen.width, Screen.height), "");
 
-            GUILayout.BeginArea(new Rect((Screen.width - 300) / 2, (Screen.height - 200) / 2, 500, 400));
+        GUILayout.BeginArea(new Rect(x: (Screen.width - 300f) / 2, (Screen.height - 200f) / 2, 500, 400));
 
-            GUILayout.Label("Hack");
-            GUILayout.Label("Enemies Killed: " + GameManagement.Instance.GetKills());
-            GUILayout.Label("Your Score: " + "GameManagement.Instance.getScore().ToString()");
-#warning TODO: How to score this genre. Kills? Points per kill most likely.
-            GUILayout.Label("Your Time:  " + Time.timeSinceLevelLoad);
-            float potentialTotalScore = 10;//GameManagement.Instance.getScore() + GameManagement.manage.getTotalScore();
-            GUILayout.Label("Total Score: " + potentialTotalScore);
+        GUILayout.Label("Hack");
+        GUILayout.Label("Enemies Killed: " + GameManagement.Instance.GetKills());
+        GUILayout.Label("Your Score: " + "GameManagement.Instance.getScore().ToString()");
+#warning TODO: How to score this game. Kills? Points per kill?
+        GUILayout.Label("Your Time:  " + Time.timeSinceLevelLoad);
+        float potentialTotalScore = 10;//GameManagement.Instance.getScore() + GameManagement.manage.getTotalScore();
+        GUILayout.Label("Total Score: " + potentialTotalScore);
 
-            if (GUILayout.Button("Next Level")) {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                /*GameManagement.manage.increaseLevel();
-                GameManagement.manage.CommitScoreToTotal();
-                Application.LoadLevel(Constants.RPG_LEVEL);*/
-            }
+        if (GUILayout.Button("Restart")) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = false;
+            Application.LoadLevel(Application.loadedLevel);
+        }
 
-            if (GUILayout.Button("Restart")) {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = false;
-                Application.LoadLevel(Application.loadedLevel);
-            }
+        if (GUILayout.Button("Quit to Main Menu")) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            Application.LoadLevel(Constants.MAIN_MENU);
+        }
 
-            if (GUILayout.Button("Save and Continue")) {
-                Cursor.lockState = CursorLockMode.None;
-                /*GameManagement.manage.increaseLevel();
-                GameManagement.manage.CommitScoreToTotal();
-                GameManagement.manage.Save();
-                Application.LoadLevel(Constants.RPG_LEVEL);*/
-                Cursor.visible = false;
-            }
+        GUILayout.EndArea();
+    }
 
-            if (GUILayout.Button("Quit to Main Menu")) {
-                Cursor.lockState = CursorLockMode.None;
-                Cursor.visible = true;
-                //Application.LoadLevel(Constants.MAIN_MENU);
-            }
+    public void GameOver() {
+        _isGameOver = true;
 
-            GUILayout.EndArea();
+        foreach (var enemy in _enemies) {
+            enemy.gameObject.SetActive(false);
         }
     }
 }

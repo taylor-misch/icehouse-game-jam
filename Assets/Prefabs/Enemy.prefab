@@ -67,8 +67,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1335770953
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 83356dad3ed056c448b0c20d17a1aefd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 7290712847874210240}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -238,3 +238,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5583160e24b60754b9c31437e0d1475e, type: 3}
   - {fileID: 8300000, guid: 51853eab7c9f3de43bddf9928a19e91a, type: 3}
   - {fileID: 8300000, guid: 8fbceedadde7a244f97d52710f489fee, type: 3}
+  isPlayer: 0

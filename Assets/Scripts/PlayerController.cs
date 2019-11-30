@@ -1,4 +1,4 @@
-﻿using DefaultNamespace;
+﻿using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] private float run_speed = 7f;
     [SerializeField] private Animator animator;
     
-    private new Rigidbody2D _rigidBody;
+    private Rigidbody2D _rigidBody;
     private bool _facingRight = true;  // For determining which way the player is currently facing.
     private bool _isRunning;
 
@@ -52,10 +52,9 @@ public class PlayerController : MonoBehaviour {
 
         #region Attacks
         if (Input.GetMouseButtonDown(0)) {
-            Attack();
+            StartCoroutine(Attack());
         }
         #endregion
-        
     }
     
     private void Flip() {
@@ -70,17 +69,19 @@ public class PlayerController : MonoBehaviour {
     }
 
     // TODO this same method should be usable against us. Thus the separation of attack logic! @Taylor
-    private void Attack() {
+    private IEnumerator Attack() {
         animator.SetTrigger(Constants.IS_ATTACKING_TRIGGER);
+        Debug.Log("Player swings");
+        yield return new WaitForSeconds(.5f);
+        Debug.Log("Player attacks");
         
-        Debug.DrawLine(transform.position, Vector2.left, Color.green); 
-            //new Vector2(transform.position.x +1.5f, transform.position.y), Color.green);
+        //Debug.DrawLine(transform.position, Vector2.left, Color.green); 
         #warning TODO Need to attack to the left as well.
         var hits = Physics2D.RaycastAll(transform.position, _facingRight ? Vector2.right: Vector2.left, 1.5f);
         foreach (var v in hits) {
             //TODO use layer mask instead
             if (v.transform.CompareTag(Tags.PLAYER)) continue;
-            
+            Debug.Log($"Attacking {v.transform.name}");
             var enemyHealth = v.transform.GetComponent<HasHealth>();
             enemyHealth.ChangeHealth(-20);
         }
