@@ -10,8 +10,8 @@ public class GameObjective : MonoBehaviour {
     // Count how long the player has survived.
     private float _stopwatch = 0f;
     private string _finalTime;
-    private float _spawnTimer = 6;
-    private const float TIME_TILL_NEXT_SPAWN = 7;
+    private float _spawnTimer = 3;
+    private const float TIME_TILL_NEXT_SPAWN = 3.5f;
 
     public UnityEngine.UI.Text displayText;
     [SerializeField] private UnityEngine.UI.Text killsText;
