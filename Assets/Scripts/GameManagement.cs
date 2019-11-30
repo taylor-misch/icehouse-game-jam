@@ -14,7 +14,7 @@ public class GameManagement : MonoBehaviour {
 
     private void Awake() {
         if (Instance == null) {
-            DontDestroyOnLoad(gameObject);
+            //DontDestroyOnLoad(gameObject);
             Instance = this;
         }else if(Instance != this){
             Destroy(gameObject);

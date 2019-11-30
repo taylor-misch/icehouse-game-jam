@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2049985902}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children: []
   m_Father: {fileID: 8655175817569396790}
   m_RootOrder: 0
@@ -67,8 +67,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1335770953
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 83356dad3ed056c448b0c20d17a1aefd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -91,7 +91,7 @@ Animator:
   m_GameObject: {fileID: 2049985902}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 03d3a6643c8a2ca4b9b2a2cfc004dc9a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 5767f7f61425ed649a441ad98fc8a179, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 7290712847874210240}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -224,7 +224,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 60
-  isAlive: 0
   deathClip:
   - {fileID: 8300000, guid: 9e195a2e59a8c1a409041f86bef77053, type: 3}
   - {fileID: 8300000, guid: be1b7ac10cc99d043a67ca8a99a3e7b8, type: 3}
@@ -239,3 +238,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5583160e24b60754b9c31437e0d1475e, type: 3}
   - {fileID: 8300000, guid: 51853eab7c9f3de43bddf9928a19e91a, type: 3}
   - {fileID: 8300000, guid: 8fbceedadde7a244f97d52710f489fee, type: 3}
+  isPlayer: 0

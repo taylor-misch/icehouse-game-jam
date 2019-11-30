@@ -1,19 +1,15 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
     [SerializeField] private float speed = 4f;
     [SerializeField] private float run_speed = 7f;
     [SerializeField] private Animator animator;
     
-    private new Rigidbody2D _rigidBody;
+    private Rigidbody2D _rigidBody;
     private bool _facingRight = true;  // For determining which way the player is currently facing.
     private bool _isRunning;
-    
-    private static readonly int SPEED = Animator.StringToHash("Speed");
-    private static readonly int IS_ATTACKING = Animator.StringToHash("IsAttacking");
-    private static readonly int IS_RUNNING = Animator.StringToHash("IsRunning");
-    private static readonly int IS_WALKING = Animator.StringToHash("IsWalking");
-    private static readonly int IS_ATTACKING_TRIGGER = Animator.StringToHash("IsAttackingTrigger");
+    private bool _isAlreadyAttacking;
 
     private void Start() {
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -43,24 +39,24 @@ public class PlayerController : MonoBehaviour {
         }
 
         var movingSpeed = Mathf.Abs(horizontalChange + verticalChange);
-        animator.SetFloat(SPEED, movingSpeed);
+        animator.SetFloat(Constants.SPEED, movingSpeed);
 
         if (_isRunning && movingSpeed > 0) {
-            animator.SetBool(IS_RUNNING, true);
+            animator.SetBool(Constants.IS_RUNNING, true);
         }
         else {
-            animator.SetBool(IS_RUNNING, false);
+            animator.SetBool(Constants.IS_RUNNING, false);
         }
 
         _rigidBody.MovePosition(position);
         #endregion
 
         #region Attacks
-        if (Input.GetMouseButtonDown(0)) {
-            Attack();
+        if (Input.GetMouseButtonDown(0) && !_isAlreadyAttacking) {
+            _isAlreadyAttacking = true;
+            StartCoroutine(Attack());
         }
         #endregion
-        
     }
     
     private void Flip() {
@@ -75,20 +71,20 @@ public class PlayerController : MonoBehaviour {
     }
 
     // TODO this same method should be usable against us. Thus the separation of attack logic! @Taylor
-    private void Attack() {
-        animator.SetTrigger(IS_ATTACKING_TRIGGER);
-
+    private IEnumerator Attack() {
+        animator.SetTrigger(Constants.IS_ATTACKING_TRIGGER);
+        yield return new WaitForSeconds(.5f);
         
-        Debug.DrawLine(transform.position, Vector2.left, Color.green); 
-            //new Vector2(transform.position.x +1.5f, transform.position.y), Color.green);
+        //Debug.DrawLine(transform.position, Vector2.left, Color.green); 
         #warning TODO Need to attack to the left as well.
         var hits = Physics2D.RaycastAll(transform.position, _facingRight ? Vector2.right: Vector2.left, 1.5f);
         foreach (var v in hits) {
             //TODO use layer mask instead
             if (v.transform.CompareTag(Tags.PLAYER)) continue;
-            
-            var enemyHealth = v.transform.GetComponent<HasHealth>();
+            var enemyHealth = v.transform.GetComponentInParent<HasHealth>();
+            //var playerHealth = v.transform.GetComponentInParent<HasHealth>();
             enemyHealth.ChangeHealth(-20);
         }
+        _isAlreadyAttacking = false;
     }
 }

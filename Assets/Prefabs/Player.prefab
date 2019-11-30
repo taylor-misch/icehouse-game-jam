@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 796276464}
   m_Layer: 0
   m_Name: PlayerSprite
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 796276462}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1}
   m_Children: []
   m_Father: {fileID: 801222683977361157}
   m_RootOrder: 0
@@ -67,8 +67,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1335770953
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 55d1818c3bb7e394d94b3e109ce69d20, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -113,6 +113,7 @@ GameObject:
   - component: {fileID: 801222683977361156}
   - component: {fileID: 1632260606}
   - component: {fileID: 535132441}
+  - component: {fileID: 1180356989}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -213,3 +214,23 @@ CircleCollider2D:
   m_Offset: {x: 0.19, y: 0.82}
   serializedVersion: 2
   m_Radius: 0.77
+--- !u!114 &1180356989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 801222683977361158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 92c021df3b10c4d4d97b450c9eb3d426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  deathClip:
+  - {fileID: 8300000, guid: 9e195a2e59a8c1a409041f86bef77053, type: 3}
+  injuredClips:
+  - {fileID: 8300000, guid: 8fbceedadde7a244f97d52710f489fee, type: 3}
+  - {fileID: 8300000, guid: 51853eab7c9f3de43bddf9928a19e91a, type: 3}
+  - {fileID: 8300000, guid: 5583160e24b60754b9c31437e0d1475e, type: 3}
+  isPlayer: 1
