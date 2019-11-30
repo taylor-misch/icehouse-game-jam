@@ -634,7 +634,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Hello world Game
+  m_Text: Sir Brickenstein
 --- !u!222 &434156982
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1195,7 +1195,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 12.7, y: -130.3}
-  m_SizeDelta: {x: 350, y: 60}
+  m_SizeDelta: {x: 350, y: 83.47}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1962665154
 MonoBehaviour:
@@ -1228,8 +1228,14 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "This is the description of\nHello world Game. \nTells of how it is a \"myth\"
-    about being lost."
+  m_Text: 'Long lost story of how Sir Brickenstein
+
+    fights his way to join King Arthur''s court
+
+    through hordes of enemy knights.
+
+
+    (Spoiler alert! He never made it)'
 --- !u!222 &1962665155
 CanvasRenderer:
   m_ObjectHideFlags: 0
