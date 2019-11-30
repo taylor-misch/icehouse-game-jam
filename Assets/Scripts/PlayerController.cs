@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour {
     private Rigidbody2D _rigidBody;
     private bool _facingRight = true;  // For determining which way the player is currently facing.
     private bool _isRunning;
+    private bool _isAlreadyAttacking;
 
     private void Start() {
         _rigidBody = GetComponent<Rigidbody2D>();
@@ -51,7 +52,8 @@ public class PlayerController : MonoBehaviour {
         #endregion
 
         #region Attacks
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0) && !_isAlreadyAttacking) {
+            _isAlreadyAttacking = true;
             StartCoroutine(Attack());
         }
         #endregion
@@ -79,9 +81,9 @@ public class PlayerController : MonoBehaviour {
         foreach (var v in hits) {
             //TODO use layer mask instead
             if (v.transform.CompareTag(Tags.PLAYER)) continue;
-            Debug.Log($"Attacking {v.transform.name}");
             var enemyHealth = v.transform.GetComponent<HasHealth>();
             enemyHealth.ChangeHealth(-20);
         }
+        _isAlreadyAttacking = false;
     }
 }

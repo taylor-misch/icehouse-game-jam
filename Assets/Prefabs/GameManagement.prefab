@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   displayText: {fileID: 0}
+  killsText: {fileID: 0}
   enemiesParent: {fileID: 1276542315}
   enemyPrefabs:
   - {fileID: 4597429715859650944, guid: 4562c787704775f43a578abb6dfc8197, type: 3}

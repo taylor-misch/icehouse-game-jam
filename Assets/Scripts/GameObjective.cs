@@ -9,11 +9,12 @@ public class GameObjective : MonoBehaviour {
     private bool _isGameEnding = false;
     // Count how long the player has survived.
     private float _stopwatch = 0f;
-
+    private string _finalTime;
     private float _spawnTimer = 6;
     private const float TIME_TILL_NEXT_SPAWN = 7;
 
     public UnityEngine.UI.Text displayText;
+    [SerializeField] private UnityEngine.UI.Text killsText;
 
     // Enemies Pooling
     private List<GameObject> _enemies;
@@ -36,33 +37,17 @@ public class GameObjective : MonoBehaviour {
             _enemies.Add(obj);
         }*/
     }
-    
-   /* void Start(){
-        GameObject en1 = GetEnemy();
-        en1.transform.position = gate1SpawnPoint.position + new Vector3(-16.7f, 0f, 7.66f);
-        //en1.transform.position = spawnPoints[0].position + new Vector3(-16.7f, 0f, 7.66f);
-        en1.SetActive(true);
-#warning pull the vector3 out from every spawn method and place it in a variable since it is the same everywhere
-#warning what is this new vector3 actually supposed to be doing? see output/console
-        Debug.LogError("Gate 1 spawn position: " + gate1SpawnPoint.position);
-        Debug.LogError("Position with vector 3 offset: " + gate1SpawnPoint.position + new Vector3(-16.7f, 0f, 7.66f));
-#warning possibly could create a method to spawn char at spawn point (en1, gate2SpawnPoint);
 
-        GameObject en2 = GetEnemy();
-        en2.transform.position = gate2SpawnPoint.position + new Vector3(-16.7f, 0f, 7.66f);
-        //en2.transform.position = spawnPoints[1].position + new Vector3(-16.7f, 0f, 7.66f);
-        en2.SetActive(true);
-    }*/
-    
     private void Update() {
         if (_isGameOver) return;
         
         // Increment/decrement the timers
         _stopwatch += Time.deltaTime;
-        _isGameEnding = _stopwatch > 60;
+        //_isGameEnding = _stopwatch > 60;
         
         if (_isGameEnding) {
             _isGameOver = true;
+            Debug.Log($"Game over {displayText.text}");
             Debug.Log("You have Completed the Game!");
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -73,6 +58,7 @@ public class GameObjective : MonoBehaviour {
         _spawnTimer += Time.deltaTime;
         // Show the timer on screen somehow Canvas item or OnGui?
         UpdateTimerOnScreen();
+        UpdateKillsOnScreen();
         
         if(_spawnTimer >= TIME_TILL_NEXT_SPAWN) {
             _spawnTimer = 0;
@@ -112,18 +98,21 @@ public class GameObjective : MonoBehaviour {
     }
     
     private void UpdateTimerOnScreen() {
-        var minsDisplay = ((int)(_stopwatch / 60)).ToString();
+        var minutesDisplay = ((int)(_stopwatch / 60)).ToString();
         var secsDisplay = ((int)_stopwatch).ToString();
 
-        secsDisplay = ((int)_stopwatch - (int.Parse(minsDisplay) * 60)).ToString();
+        secsDisplay = ((int)_stopwatch - (int.Parse(minutesDisplay) * 60)).ToString();
 
-        if (_stopwatch - (int.Parse(minsDisplay) * 60) < 10) {
+        if (_stopwatch - (int.Parse(minutesDisplay) * 60) < 10) {
             secsDisplay = "0" + secsDisplay;
         }
        
-        displayText.text = minsDisplay + " : " + secsDisplay;
+        displayText.text = minutesDisplay + " : " + secsDisplay;
     }
     
+    private void UpdateKillsOnScreen() {
+        killsText.text = $"Kills: {GameManagement.Instance.GetKills()}";
+    }
     void OnGUI() {
         if (!_isGameOver) return;
         GUI.color = Color.white;
@@ -143,13 +132,9 @@ public class GameObjective : MonoBehaviour {
 
         GUILayout.BeginArea(new Rect(x: (Screen.width - 300f) / 2, (Screen.height - 200f) / 2, 500, 400));
 
-        GUILayout.Label("Hack");
+        GUILayout.Label("Hack Game Name");
         GUILayout.Label("Enemies Killed: " + GameManagement.Instance.GetKills());
-        GUILayout.Label("Your Score: " + "GameManagement.Instance.getScore().ToString()");
-#warning TODO: How to score this game. Kills? Points per kill?
-        GUILayout.Label("Your Time:  " + Time.timeSinceLevelLoad);
-        float potentialTotalScore = 10;//GameManagement.Instance.getScore() + GameManagement.manage.getTotalScore();
-        GUILayout.Label("Total Score: " + potentialTotalScore);
+        GUILayout.Label("Your Time:  " + _finalTime);
 
         if (GUILayout.Button("Restart")) {
             Cursor.lockState = CursorLockMode.None;
@@ -167,6 +152,8 @@ public class GameObjective : MonoBehaviour {
     }
 
     public void GameOver() {
+        _finalTime = displayText.text;
+        _isGameEnding = true;
         _isGameOver = true;
 
         foreach (var enemy in _enemies) {
