@@ -67,18 +67,20 @@ public class Enemy : MonoBehaviour {
     
     private IEnumerator Attack() {
         yield return new WaitForSeconds(1f);
-        
-        _animator.SetTrigger(IS_ATTACKING_TRIGGER);
-        Debug.Log("IS now actrually attacking");
-        
-        var hits = Physics2D.RaycastAll(transform.position, _facingRight ? Vector2.left: Vector2.right, 1.5f);
-        foreach (var v in hits) {
-            //TODO use layer mask instead https://stackoverflow.com/questions/24563085/raycast-but-ignore-yourself
-            if (v.transform.CompareTag(Tags.ENEMY)) continue;
-            var playerHealth = v.transform.GetComponent<HasHealth>();
-            playerHealth.ChangeHealth(-15);
-        }
+        if (_health.isAlive) {
 
-        _isAlreadyAttacking = false;
+            _animator.SetTrigger(IS_ATTACKING_TRIGGER);
+            Debug.Log("IS now actrually attacking");
+
+            var hits = Physics2D.RaycastAll(transform.position, _facingRight ? Vector2.left : Vector2.right, 1.5f);
+            foreach (var v in hits) {
+                //TODO use layer mask instead https://stackoverflow.com/questions/24563085/raycast-but-ignore-yourself
+                if (v.transform.CompareTag(Tags.ENEMY)) continue;
+                var playerHealth = v.transform.GetComponent<HasHealth>();
+                playerHealth.ChangeHealth(-15);
+            }
+
+            _isAlreadyAttacking = false;
+        }
     }
 }
