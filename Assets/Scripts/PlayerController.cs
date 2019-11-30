@@ -81,7 +81,8 @@ public class PlayerController : MonoBehaviour {
         foreach (var v in hits) {
             //TODO use layer mask instead
             if (v.transform.CompareTag(Tags.PLAYER)) continue;
-            var enemyHealth = v.transform.GetComponent<HasHealth>();
+            var enemyHealth = v.transform.GetComponentInParent<HasHealth>();
+            //var playerHealth = v.transform.GetComponentInParent<HasHealth>();
             enemyHealth.ChangeHealth(-20);
         }
         _isAlreadyAttacking = false;

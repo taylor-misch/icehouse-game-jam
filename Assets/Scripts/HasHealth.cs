@@ -27,13 +27,13 @@ public class HasHealth : MonoBehaviour {
         if (currentHealth <= 0 && isAlive) {
             Die();
         } else {
-            AudioSource.PlayClipAtPoint(injuredClips[Random.Range(0, injuredClips.Length)], gameObject.transform.position, .8f);    
+            AudioSource.PlayClipAtPoint(injuredClips[Random.Range(0, injuredClips.Length)], gameObject.transform.position, 1f);    
         }
     }
 
     private void Die() {
         isAlive = false;
-        AudioSource.PlayClipAtPoint(deathClip[Random.Range(0, deathClip.Length)], gameObject.transform.position, .8f);
+        AudioSource.PlayClipAtPoint(deathClip[Random.Range(0, deathClip.Length)], gameObject.transform.position, 1f);
         Debug.Log($"killing {transform.name}");
         if (isPlayer) {
             _anim.SetBool(Constants.IS_DEAD, true);

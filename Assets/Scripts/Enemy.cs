@@ -68,8 +68,6 @@ public class Enemy : MonoBehaviour {
         _animator.SetTrigger(IS_ATTACKING_TRIGGER);
         yield return new WaitForSeconds(.75f);
         if (_health.isAlive) {
-            Debug.Log("IS now actrually attacking");
-
             var hits = Physics2D.RaycastAll(transform.position, _facingRight ? Vector2.left : Vector2.right, MIN_DIST);
             foreach (var v in hits) {
                 //TODO use layer mask instead https://stackoverflow.com/questions/24563085/raycast-but-ignore-yourself
