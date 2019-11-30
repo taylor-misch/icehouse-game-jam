@@ -71,9 +71,7 @@ public class PlayerController : MonoBehaviour {
     // TODO this same method should be usable against us. Thus the separation of attack logic! @Taylor
     private IEnumerator Attack() {
         animator.SetTrigger(Constants.IS_ATTACKING_TRIGGER);
-        Debug.Log("Player swings");
         yield return new WaitForSeconds(.5f);
-        Debug.Log("Player attacks");
         
         //Debug.DrawLine(transform.position, Vector2.left, Color.green); 
         #warning TODO Need to attack to the left as well.

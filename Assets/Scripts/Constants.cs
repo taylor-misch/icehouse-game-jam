@@ -10,6 +10,6 @@ public class Constants {
     public static readonly int IS_DEAD_FRONT = Animator.StringToHash("IsDeadFront");
     public static readonly int IS_DEAD_BACK = Animator.StringToHash("IsDeadBack");
     public static readonly int IS_DEAD = Animator.StringToHash("IsDead");
-    
-    public static readonly int MAIN_MENU = 0;
+
+    public const int MAIN_MENU = 0;
 }

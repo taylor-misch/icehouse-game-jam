@@ -34,7 +34,7 @@ public class HasHealth : MonoBehaviour {
     private void Die() {
         isAlive = false;
         AudioSource.PlayClipAtPoint(deathClip[Random.Range(0, deathClip.Length)], gameObject.transform.position, .8f);
-
+        Debug.Log($"killing {transform.name}");
         if (isPlayer) {
             _anim.SetBool(Constants.IS_DEAD, true);
             GameObjective.Instance.GameOver();

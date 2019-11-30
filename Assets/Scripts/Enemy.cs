@@ -18,7 +18,7 @@ public class Enemy : MonoBehaviour {
         _animator = GetComponentInChildren<Animator>();
     }
     private void Update() {
-        if (!_health.isAlive) return;
+        if (!_health.isAlive) {Debug.Log("IS not alive");return;}
         var playerPos = _player.position;
         Vector2 pos = transform.position;
 
